@@ -6,12 +6,15 @@ app = Flask(__name__)
 api = Api(app)
 
 class ShAre(Resource):
-    def get(self, shareid):
+    def get(self, shareid=None):
+	if not shareid:
+		return "Hi"
 	ad = Share(shareid)
 	return {'open_price': ad.get_open(), 'price': ad.get_price(), 'change':ad.get_change()}
 	
 
 api.add_resource(ShAre, '/<string:shareid>')
+api.add_resource(ShAre, '/')
 
 if __name__ == '__main__':
     app.run(debug=True, port=5002)
